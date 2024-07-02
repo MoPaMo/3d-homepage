@@ -12,9 +12,12 @@
 <body>
   <a-scene>
     <a-box position="0 0.5 -3" rotation="0 45 0" color="#4CC3D9""></a-box>
-    <a-entity text="value: Hello World;"></a-entity>
-    <!--ground plane-->
-    <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100 color="green"></a-plane>
+    <a-entity text=" value: Hello World;"></a-entity>
+      <!--ground plane-->
+      <a-entity id="size" position="0 2 -3" animation="property: scale; to: 2 2 2; dir: alternate; loop: false"
+        text="color: #4CC3D9; align: center; value: Welcome!; width: 1.5">
+      </a-entity>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100 color=" green"></a-plane>
   </a-scene>
   <script src="script.js"></script>
 </body>

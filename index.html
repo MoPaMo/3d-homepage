@@ -6,17 +6,23 @@
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js">
+  </script>
+    <script src="https://unpkg.com/aframe-extras@6.1.0/dist/aframe-extras.min.js"></script>
 </head>
 
 <body>
   <a-scene>
     <a-box position="0 0.5 -3" rotation="0 45 0" color="#4CC3D9""></a-box>
-    <a-entity text=" value: Hello World;"></a-entity>
-      <!--ground plane-->
-      <a-entity id="welcome" position="0 2 -2" animation="property: scale; to: 2 2 2; dir: alternate; loop: false"
-        text="color: #F0E68C; align: center; value: Welcome!; width: 1.5">
-      </a-entity>
+    <a-entity geometry="primitive: plane; height: 10; width: 10"
+      material="shader: standard;"
+      position="0 0 -5"
+      a-blur="intensity: 5"></a-entity>
+
+    <!-- Your welcome text entity -->
+    <a-entity id="welcome" position="0 2 -2" 
+      animation="property: scale; to: 2 2 2; dir: alternate; loop: false"
+      text="color: #F0E68C; align: center; value: Welcome!; width: 1.5">
     <a-entity position="0 8 -16" 
               animation="property: scale; to: 5 5 5; dir: alternate; loop: false"
               animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000" 
@@ -40,7 +46,7 @@
     <a-entity gltf-model="url(/birch_2.gltf)" position="-8 -0.5 -40" rotation="0 30 0"></a-entity>
     <a-entity gltf-model="url(/birch_2.gltf)" position="12 -0.5 -45" rotation="0 -60 0"></a-entity>
     <a-entity gltf-model="url(/birch_1.gltf)" position="-12 -0.5 -50"></a-entity>
-      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100 color=" green"></a-plane>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100 color="green"></a-plane>
   <a-sky color="#7c5295"></a-sky>
   </a-scene>
 

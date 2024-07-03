@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solar System Simulation</title>
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 </head>
 <body>
   <a-scene>
@@ -21,14 +21,13 @@
     </a-sphere>
     <!-- Earth -->
     <a-entity id="earth-orbit" rotation="0 0 0">
-      <a-entity position="20 0 0">
-        <a-sphere radius="1" src="#earthTexture">
+      <a-entity id="earth-rotator" position="20 0 0">
+        <a-sphere id="earth" radius="1" src="#earthTexture">
+          <!-- Moon -->
+          <a-entity id="moon-orbit">
+            <a-sphere position="3 0 0" radius="0.27" src="#moonTexture"></a-sphere>
+          </a-entity>
         </a-sphere>
-        <!-- Moon -->
-        <a-entity id="moon-orbit">
-          <a-sphere position="3 0 0" radius="0.27" src="#moonTexture">
-          </a-sphere>
-        </a-entity>
       </a-entity>
     </a-entity>
     <!-- Ambient light -->
@@ -40,5 +39,38 @@
       <a-cursor></a-cursor>
     </a-entity>
   </a-scene>
+
+  <script>
+    // Wait for the scene to load
+    document.querySelector('a-scene').addEventListener('loaded', function () {
+      const earthOrbit = document.querySelector('#earth-orbit');
+      const earth = document.querySelector('#earth');
+      const moonOrbit = document.querySelector('#moon-orbit');
+
+      // Set up animation
+      let startTime = Date.now();
+      
+      function animate() {
+        let currentTime = Date.now();
+        let elapsedTime = (currentTime - startTime) / 1000; // Time in seconds
+
+        // Earth's orbit (1 revolution per minute = 6 degrees per second)
+        let earthOrbitAngle = (elapsedTime * 6) % 360;
+        earthOrbit.setAttribute('rotation', `0 ${earthOrbitAngle} 0`);
+
+        // Earth's rotation (1 rotation per day, ~365 rotations per year)
+        let earthRotationAngle = (elapsedTime * 6 * 365) % 360;
+        earth.setAttribute('rotation', `0 ${earthRotationAngle} 0`);
+
+        // Moon's orbit (about 13 rotations per year)
+        let moonOrbitAngle = (elapsedTime * 6 * 13) % 360;
+        moonOrbit.setAttribute('rotation', `0 ${moonOrbitAngle} 0`);
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    });
+  </script>
 </body>
 </html>

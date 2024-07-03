@@ -1,36 +1,60 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoPaMo - Personal Homepage</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
 </head>
-
 <body>
   <a-scene>
-    <a-box position="0 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-    <!-- Your welcome text entity -->
-    <a-entity id="welcome" position="0 2 -2" animation="property: scale; to: 2 2 2; dir: alternate; loop: false"
-      text="color: #F0E68C; align: center; value: Welcome!; width: 1.5">
-      <a-entity position="0 8 -16" animation="property: scale; to: 5 5 5; dir: alternate; loop: false"
-        animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-        text="color: #4CC3D9; align: center; value: MoPaMo; width: 1.5">
-      </a-entity>
+    <a-assets>
+      <a-asset-item id="optimerBoldFont" src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-asset-item>
+    </a-assets>
+    <a-entity
+      text-geometry="value: MoPaMo; font: #optimerBoldFont; size: 5; height: 0.5; curveSegments: 12; bevelEnabled: true; bevelThickness: 0.1; bevelSize: 0.05;"
+      material="color: #4CC3D9; metalness: 0.8; roughness: 0.2;"
+      position="-10 0 -20"
+      rotation="0 15 0"
+      scale="2 2 2"
+    ></a-entity>
+
+    <a-entity id="welcome" position="0 2 -2" 
+              animation="property: scale; to: 2 2 2; dir: alternate; loop: false"
+              text="color: #F0E68C; align: center; value: Welcome!; width: 1.5">
     </a-entity>
 
-    <!--trees-->
-   
+    <!-- Rotating MoPaMo text (from old code) -->
+    <a-entity position="0 8 -16" 
+              animation="property: scale; to: 5 5 5; dir: alternate; loop: false"
+              animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+              text="color: #4CC3D9; align: center; value: MoPaMo; width: 1.5">
+    </a-entity>
 
-    <!-- ground plane -->
-    <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" color="#FFFFC2"></a-plane>
+    <!-- Environment -->
     <a-sky color="#7c5295"></a-sky>
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" color="#FFFFC2"></a-plane>
+
+    <!-- 3D Socials/Links Section -->
+    <a-entity position="-4 2 -5">
+      <a-box width="4" height="3" depth="0.2" color="#F0E68C"></a-box>
+      <a-text value="Socials" position="-1.5 1 0.11" scale="1.5 1.5 1.5" color="#000"></a-text>
+    </a-entity>
+
+    <!-- 3D Projects Section -->
+    <a-entity position="4 2 -5">
+      <a-box width="4" height="3" depth="0.2" color="#F0E68C"></a-box>
+      <a-text value="Projects" position="-1.5 1 0.11" scale="1.5 1.5 1.5" color="#000"></a-text>
+    </a-entity>
+
+    <a-box position="0 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+
+    <!-- Camera and Cursor -->
+    <a-entity camera look-controls wasd-controls position="0 1.6 0">
+      <a-cursor></a-cursor>
+    </a-entity>
   </a-scene>
 
-  <script src="script.js"></script>
 </body>
-
 </html>

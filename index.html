@@ -38,12 +38,16 @@
     <!-- Earth -->
     <a-entity id="earth-orbit" rotation="0 0 0">
       <a-entity id="earth-rotator" position="20 0 0">
-        <a-sphere id="earth" radius="1" src="#earthTexture">
-          <!-- Moon -->
-          <a-entity id="moon-orbit">
-            <a-sphere position="3 0 0" radius="0.27" src="#moonTexture"></a-sphere>
-          </a-entity>
-        </a-sphere>
+        <a-entity id="earth-tilter" rotation="23.5 0 0">
+          <a-sphere id="earth" radius="1" src="#earthTexture">
+            <!-- Moon -->
+            <a-entity id="moon-orbit" rotation="5.14 0 0">
+              <a-entity id="moon-tilter" rotation="1.54 0 0">
+                <a-sphere id="moon" position="3 0 0" radius="0.27" src="#moonTexture"></a-sphere>
+              </a-entity>
+            </a-entity>
+          </a-sphere>
+        </a-entity>
       </a-entity>
     </a-entity>
     <!-- Ambient light -->
@@ -63,41 +67,40 @@
   </div>
 
   <script>
-    // Wait for the scene to load
     document.querySelector('a-scene').addEventListener('loaded', function () {
       const earthOrbit = document.querySelector('#earth-orbit');
-      const earth = document.querySelector('#earth');
+      const earthTilter = document.querySelector('#earth-tilter');
       const moonOrbit = document.querySelector('#moon-orbit');
+      const moon = document.querySelector('#moon');
       const speedSlider = document.getElementById('speedSlider');
       const speedValue = document.getElementById('speedValue');
-
       let animationSpeed = 1;
 
       // Set up animation
       let startTime = Date.now();
-
       function animate() {
         let currentTime = Date.now();
         let elapsedTime = (currentTime - startTime) / 1000 * animationSpeed; // Time in seconds, adjusted by speed
 
-        // Earth's orbit (1 revolution per minute = 6 degrees per second)
-        let earthOrbitAngle = (elapsedTime * 6) % 360;
+        // Earth's orbit (1 revolution per year = 360 degrees per 365.25 days)
+        let earthOrbitAngle = (elapsedTime * 360 / 365.25) % 360;
         earthOrbit.setAttribute('rotation', `0 ${earthOrbitAngle} 0`);
 
-        // Earth's rotation (1 rotation per day, ~365 rotations per year)
-        let earthRotationAngle = (elapsedTime * 6 * 365) % 360;
-        earth.setAttribute('rotation', `0 ${earthRotationAngle} 0`);
+        // Earth's rotation (1 rotation per 23.93 hours)
+        let earthRotationAngle = (elapsedTime * 360 / (23.93 / 24)) % 360;
+        earthTilter.setAttribute('rotation', `23.5 ${earthRotationAngle} 0`);
 
-        // Moon's orbit (about 13 rotations per year)
-        let moonOrbitAngle = (elapsedTime * 6 * 13) % 360;
-        moonOrbit.setAttribute('rotation', `0 ${moonOrbitAngle} 0`);
+        // Moon's orbit (1 revolution per 27.32 days)
+        let moonOrbitAngle = (elapsedTime * 360 / 27.32) % 360;
+        //moonOrbit.setAttribute('rotation', `5.14 ${moonOrbitAngle} 0`);
+
+        // Moon's synchronous rotation
+        moon.setAttribute('rotation', `0 ${-moonOrbitAngle} 0`);
 
         requestAnimationFrame(animate);
       }
-
       animate();
 
-      // Speed control event listener
       speedSlider.addEventListener('input', function() {
         animationSpeed = parseFloat(this.value);
         speedValue.textContent = animationSpeed.toFixed(1) + 'x';

@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solar System Simulation</title>
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <style>
+    #speedControl {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+    #speedControl label {
+      color: white;
+      margin-right: 10px;
+    }
+  </style>
 </head>
 <body>
   <a-scene>
@@ -40,19 +56,29 @@
     </a-entity>
   </a-scene>
 
+  <div id="speedControl">
+    <label for="speedSlider">Animation Speed:</label>
+    <input type="range" id="speedSlider" min="0.1" max="5" step="0.1" value="1">
+    <span id="speedValue">1x</span>
+  </div>
+
   <script>
     // Wait for the scene to load
     document.querySelector('a-scene').addEventListener('loaded', function () {
       const earthOrbit = document.querySelector('#earth-orbit');
       const earth = document.querySelector('#earth');
       const moonOrbit = document.querySelector('#moon-orbit');
+      const speedSlider = document.getElementById('speedSlider');
+      const speedValue = document.getElementById('speedValue');
+
+      let animationSpeed = 1;
 
       // Set up animation
       let startTime = Date.now();
-      
+
       function animate() {
         let currentTime = Date.now();
-        let elapsedTime = (currentTime - startTime) / 1000; // Time in seconds
+        let elapsedTime = (currentTime - startTime) / 1000 * animationSpeed; // Time in seconds, adjusted by speed
 
         // Earth's orbit (1 revolution per minute = 6 degrees per second)
         let earthOrbitAngle = (elapsedTime * 6) % 360;
@@ -70,7 +96,13 @@
       }
 
       animate();
+
+      // Speed control event listener
+      speedSlider.addEventListener('input', function() {
+        animationSpeed = parseFloat(this.value);
+        speedValue.textContent = animationSpeed.toFixed(1) + 'x';
+      });
     });
   </script>
-</body>
-</html>
+  </body>
+  </html>

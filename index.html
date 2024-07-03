@@ -3,81 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoPaMo - Project Planet and Social Moon</title>
+  <title>Solar System Simulation</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
   <a-scene>
     <a-assets>
       <img id="spaceTexture" src="https://cdn.glitch.com/your-project/space-texture.jpg">
-      <img id="planetTexture" src="https://cdn.glitch.com/your-project/planet-texture.jpg">
+      <img id="sunTexture" src="https://cdn.glitch.com/your-project/sun-texture.jpg">
+      <img id="earthTexture" src="https://cdn.glitch.com/your-project/earth-texture.jpg">
       <img id="moonTexture" src="https://cdn.glitch.com/your-project/moon-texture.jpg">
     </a-assets>
 
     <!-- Space environment -->
     <a-sky src="#spaceTexture" rotation="0 -90 0"></a-sky>
 
-    <!-- Central planet (Projects) -->
-    <a-sphere position="0 1.5 -5" radius="2" src="#planetTexture">
-      <a-text value="Projects" position="0 2.5 0" scale="2 2 2" align="center" color="#FFF"></a-text>
+    <!-- Sun -->
+    <a-sphere position="0 0 0" radius="5" src="#sunTexture">
       <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" dur="100000" easing="linear"></a-animation>
     </a-sphere>
 
-    <!-- Orbiting moon (Socials) -->
-   
+    <!-- Earth -->
+    <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 365000; easing: linear">
+      <a-sphere position="20 0 0" radius="1" src="#earthTexture">
+        <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" dur="24000" easing="linear"></a-animation>
+      </a-sphere>
 
-    <!-- Project markers on the planet -->
-    <a-entity position="0 1.5 -5">
-      <a-sphere position="1.8 1 0" radius="0.1" color="#FFD700">
-        <a-text value="Project X" position="0 0.2 0" scale="0.3 0.3 0.3" align="center"></a-text>
-      </a-sphere>
-      <a-sphere position="-1 -1.5 1" radius="0.1" color="#FF4500">
-        <a-text value="Project Y" position="0 0.2 0" scale="0.3 0.3 0.3" align="center"></a-text>
-      </a-sphere>
-      <a-sphere position="0 1.8 1" radius="0.1" color="#1E90FF">
-        <a-text value="Project Z" position="0 0.2 0" scale="0.3 0.3 0.3" align="center"></a-text>
-      </a-sphere>
-    </a-entity>
-
-    <a-entity position="0 1.5 -5">
-      <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear">
-        <a-sphere position="4 0 0" radius="0.5" src="#moonTexture">
-          <a-text value="Socials" position="0 0.75 0" scale="0.75 0.75 0.75" align="center" color="#FFF"></a-text>
+      <!-- Moon -->
+      <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 27000; easing: linear">
+        <a-sphere position="23 0 0" radius="0.27" src="#moonTexture">
+          <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" dur="655200" easing="linear"></a-animation>
         </a-sphere>
       </a-entity>
     </a-entity>
 
-    <!-- Social media icons on the moon -->
-    <a-entity position="0 1.5 -5">
-      <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear">
-        <a-entity position="4 0 0">
-          <a-entity position="0 0.4 0">
-            <a-plane width="0.2" height="0.2" color="#3b5998">
-              <a-text value="f" position="0 0 0.1" scale="0.5 0.5 0.5" align="center"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-entity position="0.2 0.2 0">
-            <a-plane width="0.2" height="0.2" color="#1DA1F2">
-              <a-text value="t" position="0 0 0.1" scale="0.5 0.5 0.5" align="center"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-entity position="-0.2 0.2 0">
-            <a-plane width="0.2" height="0.2" color="#E1306C">
-              <a-text value="i" position="0 0 0.1" scale="0.5 0.5 0.5" align="center"></a-text>
-            </a-plane>
-          </a-entity>
-        </a-entity>
-      </a-entity>
-    </a-entity>
-
     <!-- Ambient light -->
-    <a-light type="ambient" color="#BBB"></a-light>
+    <a-light type="ambient" color="#BBB" intensity="0.2"></a-light>
 
-    <!-- Directional light -->
-    <a-light type="directional" color="#FFF" intensity="0.6" position="-0.5 1 1"></a-light>
+    <!-- Directional light (sunlight) -->
+    <a-light type="directional" color="#FFF" intensity="1" position="0 0 0"></a-light>
 
     <!-- Camera -->
-    <a-entity camera look-controls wasd-controls position="0 1.6 0">
+    <a-entity camera look-controls wasd-controls position="0 10 30">
       <a-cursor></a-cursor>
     </a-entity>
   </a-scene>
